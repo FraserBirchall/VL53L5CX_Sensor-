@@ -21,11 +21,11 @@
 #endif
 
 //Define the reset scheme
-#ifdef CONFIG_VL53L5CX_RESET_PIN_HIGH
-#define VL53L5CX_RESET_LEVEL 1
-#elif CONFIG_VL53L5CX_RESET_PIN_LOW
+
+#define CONFIG_VL53L5CX_RESET_PIN_LOW
 #define VL53L5CX_RESET_LEVEL 0
-#endif
+//#endif
+
 
 uint8_t VL53L5CX_WrMulti(VL53L5CX_Platform *p_platform, uint16_t RegisterAdress, uint8_t *p_values, uint32_t size) {
 
@@ -97,5 +97,5 @@ void VL53L5CX_SwapBuffer(uint8_t *buffer, uint16_t size) {
 uint8_t VL53L5CX_WaitMs(VL53L5CX_Platform *p_platform, uint32_t TimeMs) {
     vTaskDelay(TimeMs / portTICK_PERIOD_MS);
 
-    return ESP_OK;
+    return ESP_OK; 
 }

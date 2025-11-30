@@ -1,3 +1,11 @@
+
+
+In MenuConfig: 
+
+Go to Component Config -> ESP System settings and increase the Main task stack size to at least 7168.
+
+Serial flasher config → Flash size and change to 4MB
+
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 get_idf

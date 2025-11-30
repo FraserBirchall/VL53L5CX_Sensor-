@@ -1,0 +1,2 @@
+source /Users/fraserbirchall/esp/VL53L5CX_Sensor/build/bootloader/gdbinit/symbols
+source /Users/fraserbirchall/esp/VL53L5CX_Sensor/build/bootloader/gdbinit/connect
