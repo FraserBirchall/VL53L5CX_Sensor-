@@ -18,7 +18,9 @@ typedef struct {
 
 void Vl53l5cxTaskCode(void *pvParameters)
 {
-    TaskParameters *p = (TaskParameters *)pvParameters;
+    vTaskDelay(pdMS_TO_TICKS(100));
+    printf(">>>>Entered the vl53l5cx task function<<<<<")
+    TaskParameters *p = (TaskParameters *)pvParameters; //pointer for task
 
     /*********************************/
     /*         Ranging loop          */
@@ -29,7 +31,7 @@ void Vl53l5cxTaskCode(void *pvParameters)
     p->loop = 0;
     while(p->loop < 10)
     {
-        p->status = vl53l5cx_check_data_ready(&(p->Dev), &(p->isReady));
+        p->status = vl53l5cx_check_data_ready(&(p->Dev), &(p->isReady)); //It is an adress hence the &
         
         if(p->isReady)
         {
@@ -154,21 +156,21 @@ void app_main(void)
     BaseType_t result_create;
 
     result_create = xTaskCreate(
-        Vl53l5cxTaskCode,              // Task function 
-        "Basic ranging of Vl53l5cx",   // Name of task
-        4096,                          // Stack size
-        (void *)pointer,               // Parameters passed to task
-        5,                             // Priority
-        NULL                           // Task handle
+        Vl53l5cxTaskCode,              // Function 
+        "Basic ranging of Vl53l5cx",   // Task name
+        4096,                          // Stack size --- Change this could be why corrupting
+        (void *)pointer,               // Parameters passed to task, in this case is a struct
+        5,                             // Priority: 9 is high priority(WiFi) and 1 is low(background tasks)
+        NULL                           // Task handle, dm here 
     );
     
-    if (result_create == pdPASS) {
+    if (result_create == pdPASS) {    //Debugging to see if task was being created, it is 
         printf("Task has been created\n");
     } else {
         printf("Task has not been created\n");
         free(pointer);
     }
     
-    printf(">>>>Exiting the app_main<<<<\n\n");
+    printf(">>>>Exiting the app_main<<<<\n\n"); //Output prints this, know it isnt the baud rate now causing the issue
     vTaskDelay(pdMS_TO_TICKS(100));
 }
